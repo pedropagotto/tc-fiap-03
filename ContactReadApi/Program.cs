@@ -10,6 +10,7 @@ using Microsoft.EntityFrameworkCore;
 using Prometheus;
 using Prometheus.SystemMetrics;
 using System.Reflection;
+using API.Extensions;
 
 var environmentName = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT");
 
@@ -34,6 +35,7 @@ builder.Services.AddDbContext<AppDbContext>(options =>
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
+builder.Services.JwtConfig(configuration);
 builder.Services.AddSwaggerConfig();
 builder.Services.AddCorsConfig();
 

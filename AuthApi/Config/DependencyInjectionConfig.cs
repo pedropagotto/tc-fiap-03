@@ -1,8 +1,10 @@
-﻿using API.Services.Token;
+﻿using System.Diagnostics.CodeAnalysis;
+using API.Services.Token;
 using Application.Services;
+using Application.Services.AuthenticationServices;
+using Application.Services.UserServices;
 using Domain.Abstractions;
 using Infra.Repository;
-using System.Diagnostics.CodeAnalysis;
 
 namespace API.Config
 {
@@ -11,9 +13,11 @@ namespace API.Config
     {
         public static IServiceCollection AddDependencyInjectionConfig(this IServiceCollection services)
         {
+            services.AddScoped<IGenerateJwtToken, GenerateJwtToken>();
             services.AddScoped<IValidateJwtToken, ValidateJwtToken>();
-            services.AddScoped<IContactService, ContactService>();
-            services.AddScoped<IContactRepository, ConctactRepository>();
+            services.AddScoped<IValidateUser, ValidateUser>();
+            services.AddScoped<IAuthService, AuthService>();
+            services.AddScoped<IUserService, UserService>();
 
             return services;
         }

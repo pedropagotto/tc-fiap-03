@@ -35,7 +35,7 @@ namespace API.Controllers
 
             var response = await _contactService.Create(contact);
 
-            return CreatedAtAction("GetContact", new { id = response.Id }, response);
+            return Created("/api/Contacts", response);
         }
 
         /// <summary>
