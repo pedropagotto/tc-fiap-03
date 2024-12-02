@@ -1,0 +1,72 @@
+version: '3.8'
+
+services:
+  postgres.db:
+    image: postgres:16-bullseye
+    container_name: postgres.db
+    environment:
+      POSTGRES_USER: postech
+      POSTGRES_PASSWORD: postech
+      POSTGRES_DB: techchallenge01
+    networks:
+      - mynetwork
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+  postgres.exporter:
+    image: wrouesnel/postgres_exporter:latest
+    environment:
+      DATA_SOURCE_NAME: postgresql://postech:postech@postgres:5432/techchallenge01?sslmode=disable
+    depends_on:
+      - postgres.db
+    networks:
+      - mynetwork
+    ports:
+      - "9187:9187"
+  # contacts.api:
+  #   image: ${DOCKER_REGISTRY-}contactsapi
+  #   container_name: contacts.api
+  #   build:
+  #     context: .
+  #     dockerfile: ./Dockerfile
+  #   ports:
+  #     - 8080:8080
+  #   environment:
+  #     - ASPNETCORE_ENVIRONMENT=Development
+  #     - ASPNETCORE_HTTP_PORTS=8080
+  #     - ConnectionStrings__PostgresConnectionString=Host=postgres.db;Port=5432;Database=techchallenge01;Username=postech;Password=postech 
+  #   networks:
+  #     - mynetwork
+  #   depends_on:
+  #     - postgres.db
+  # prometheus:
+  #   image: prom/prometheus:v2.54.1
+  #   volumes:
+  #     - ./prometheus.yml:/etc/prometheus/prometheus.yml
+  #   container_name: prometheus
+  #   ports:
+  #     - "9090:9090"
+  #   depends_on:
+  #     - contacts.api
+  #   networks:
+  #     - mynetwork
+  # grafana:
+  #   image: grafana/grafana
+  #   ports:
+  #     - "3000:3000"
+  #   environment:
+  #     - GF_SECURITY_ADMIN_PASSWORD=admin
+  #   volumes:
+  #     - ./grafana:/var/lib/grafana
+  #   depends_on:
+  #     - prometheus
+  #   networks:
+  #     - mynetwork
+
+volumes:
+  postgres_data:
+networks:
+  mynetwork:
+    driver: bridge
+     
