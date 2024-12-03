@@ -2,7 +2,9 @@
 using API.Validation;
 using Application.Services;
 using Application.ViewModels.Contact;
+using ContactApi.QueueMessageModels;
 using Domain.Shared;
+using MassTransit;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -13,18 +15,18 @@ namespace API.Controllers
     [Authorize]
     public class ContactsController : ControllerBase
     {
-        private readonly IContactService _contactService;
+        private readonly IBus _bus;
 
-        public ContactsController(IContactService contactService)
+        public ContactsController(IBus bus)
         {
-            _contactService = contactService;
+            _bus = bus;
         }
 
         /// <summary>
         /// Cadastra um novo contato no sistema.
         /// </summary>
         [HttpPost]
-        [ProducesResponseType(StatusCodes.Status201Created)]
+        [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(ValidationErrorModel), StatusCodes.Status400BadRequest)]
         [ProducesResponseType(typeof(UnauthorizedErrorModel), StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(typeof(ErrorModel), StatusCodes.Status500InternalServerError)]
@@ -33,9 +35,11 @@ namespace API.Controllers
             ContactValidator validator = new();
             validator.IsValid(contact);
 
-            var response = await _contactService.Create(contact);
+            var endpoint = await _bus.GetSendEndpoint(new Uri("queue:create-contact"));
 
-            return Created("/api/Contacts", response);
+            await endpoint.Send(new CreateContactMessage(contact.Name, contact.Ddd, contact.Phone, contact.Email, $"Criação contato solicitada às {DateTime.Now}"));
+            
+            return Ok("Solicitação de criação enviada com sucesso!");
         }
 
         /// <summary>
@@ -46,21 +50,17 @@ namespace API.Controllers
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(ValidationErrorModel), StatusCodes.Status400BadRequest)]
         [ProducesResponseType(typeof(UnauthorizedErrorModel), StatusCodes.Status401Unauthorized)]
-        [ProducesResponseType(typeof(ErrorModel), StatusCodes.Status404NotFound)]
         [ProducesResponseType(typeof(ErrorModel), StatusCodes.Status500InternalServerError)]
         public async Task<ActionResult<ContactResponseModel>> PutContact([FromRoute] int id, [FromBody] ContactRequestModel contact)
         {
             ContactValidator validator = new();
             validator.IsValid(contact);
+            
+            var endpoint = await _bus.GetSendEndpoint(new Uri("queue:update-contact"));
 
-            var response = await _contactService.Update(id, contact);
-
-            if (response is null)
-            {
-                NotFoundException.Throw("001", "Contato não encontrado.");
-            }
-
-            return Ok(response);
+            await endpoint.Send(new UpdateContactMessage(id, contact.Name, contact.Ddd, contact.Phone, contact.Email, $"Atualização de contato solicitada às {DateTime.Now}"));
+            
+            return Ok("Solicitação de atualização enviada com sucesso!");
         }
 
         /// <summary>
@@ -69,19 +69,16 @@ namespace API.Controllers
         /// <param name="id" example="1">Id do contato a ser removido.</param>
         /// <returns></returns>
         [HttpDelete("{id}")]
-        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(UnauthorizedErrorModel), StatusCodes.Status401Unauthorized)]
-        [ProducesResponseType(typeof(ErrorModel), StatusCodes.Status404NotFound)]
         [ProducesResponseType(typeof(ErrorModel), StatusCodes.Status500InternalServerError)]
         public async Task<ActionResult> DeleteContact([FromRoute] int id)
         {
-            var success = await _contactService.Delete(id);
-            if (!success)
-            {
-                NotFoundException.Throw("001", "Contato não encontrado.");
-            }
+            var endpoint = await _bus.GetSendEndpoint(new Uri("queue:remove-contact"));
 
-            return NoContent();
+            await endpoint.Send(new RemoveContactMessage(id, $"Remoção de contato solicitada às {DateTime.Now}"));
+            
+            return Ok("Solicitação de exclusão enviada com sucesso!");
         }
 
     }

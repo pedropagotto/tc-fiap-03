@@ -36,6 +36,7 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.JwtConfig(configuration);
 builder.Services.AddSwaggerConfig();
 builder.Services.AddCorsConfig();
+builder.AddMassTransitConfig();
 
 //AutoMapper
 var mapperConfig = new MapperConfiguration(mc =>

@@ -14,9 +14,6 @@ namespace API.Config
         public static IServiceCollection AddDependencyInjectionConfig(this IServiceCollection services)
         {
             services.AddScoped<IValidateJwtToken, ValidateJwtToken>();
-            services.AddScoped<IContactService, ContactService>();
-            services.AddScoped<IContactRepository, ConctactRepository>();
-
             return services;
         }
     }
