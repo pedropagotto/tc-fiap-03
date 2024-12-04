@@ -1,3 +1,24 @@
 var builder = DistributedApplication.CreateBuilder(args);
 
+var username = builder.AddParameter("username", secret: true);
+var password = builder.AddParameter("password", secret: true);
+
+var postgres = builder.AddPostgres("postgres", username, password, 5432);
+var postgresdb = postgres.AddDatabase("techchallenge01");
+
+var authProject = builder.AddProject<Projects.AuthApi>("auth")
+    .WithReference(postgresdb);
+
+var readApi = builder.AddProject<Projects.ContactReadApi>("readApi")
+    .WithReference(postgresdb);
+
+builder.AddContainer("grafana", "grafana/grafana")
+                     .WithBindMount("../grafana/config", "/etc/grafana", isReadOnly: true)
+                     .WithBindMount("../grafana/dashboards", "/var/lib/grafana/dashboards", isReadOnly: true)
+                     .WithHttpEndpoint(targetPort: 3000, name: "http");
+
+builder.AddContainer("prometheus", "prom/prometheus")
+       .WithBindMount("../prometheus", "/etc/prometheus", isReadOnly: true)
+       .WithHttpEndpoint(port: 9090, targetPort: 9090);
+
 builder.Build().Run();
