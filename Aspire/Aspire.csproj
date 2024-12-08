@@ -17,6 +17,7 @@
 
     <ItemGroup>
       <ProjectReference Include="..\AuthApi\AuthApi.csproj" />
+      <ProjectReference Include="..\ContactApi\ContactApi.csproj" />
       <ProjectReference Include="..\ContactReadApi\ContactReadApi.csproj" />
     </ItemGroup>
 

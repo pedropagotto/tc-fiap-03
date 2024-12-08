@@ -25,11 +25,6 @@ var config = new ConfigurationBuilder()
 var configuration = config.GetSection("Values:TechChallenge").Get<TechChallengeFiapConfiguration>();
 
 var builder = WebApplication.CreateBuilder(args);
-
-// builder.Services.AddDbContext<AppDbContext>(options =>
-//     options.EnableSensitiveDataLogging()
-//         .UseNpgsql(config.GetConnectionString("PostgresConnectionString")));
-
 builder.AddNpgsqlDbContext<AppDbContext>("techchallenge01");
 
 // Add services to the container.
