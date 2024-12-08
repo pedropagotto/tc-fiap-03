@@ -14,6 +14,9 @@ var authProject = builder.AddProject<Projects.AuthApi>("auth")
 var readApi = builder.AddProject<Projects.ContactReadApi>("readApi")
     .WithReference(postgresdb);
 
+var contactsApi = builder.AddProject<Projects.ContactApi>("cotactsApi")
+    .WithReference(postgresdb);
+
 builder.AddContainer("grafana", "grafana/grafana")
     .WithBindMount("../grafana/config", "/etc/grafana", isReadOnly: true)
     .WithBindMount("../grafana", "/var/lib/grafana")
