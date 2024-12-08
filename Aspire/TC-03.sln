@@ -19,8 +19,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ContactApi", "..\ContactApi
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AuthApi", "..\AuthApi\AuthApi.csproj", "{1E491A46-7147-4DB5-9995-595726122EF6}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ServiceDefaults", "..\ServiceDefaults\ServiceDefaults.csproj", "{EDFFA3E4-22A3-496C-B405-387D520D588C}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ContactWorker", "..\ContactWorker\ContactWorker.csproj", "{52BA585E-28AF-4CEB-A9CC-DD6D7AB25FCC}"
 EndProject
 Global
