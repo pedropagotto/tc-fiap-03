@@ -30,6 +30,8 @@ builder.Services.AddDbContext<AppDbContext>(options =>
     options.EnableSensitiveDataLogging()
         .UseNpgsql(config.GetConnectionString("PostgresConnectionString")));
 
+builder.AddServiceDefaults();
+
 // Add services to the container.
 
 builder.Services.AddControllers();
@@ -57,7 +59,7 @@ builder.Services.AddHealthChecks()
     .AddNpgSql(config.GetConnectionString("PostgresConnectionString")!)
     .ForwardToPrometheus();
 
-builder.Services.AddSystemMetrics();
+// builder.Services.AddSystemMetrics();
 
 var app = builder.Build();
 

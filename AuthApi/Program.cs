@@ -7,7 +7,6 @@ using Common.Config;
 using HealthChecks.UI.Client;
 using Infra;
 using Microsoft.AspNetCore.Diagnostics.HealthChecks;
-using Microsoft.EntityFrameworkCore;
 using Prometheus;
 using Prometheus.SystemMetrics;
 using System.Reflection;
@@ -26,11 +25,12 @@ var configuration = config.GetSection("Values:TechChallenge").Get<TechChallengeF
 
 var builder = WebApplication.CreateBuilder(args);
 
-builder.Services.AddDbContext<AppDbContext>(options =>
-    options.EnableSensitiveDataLogging()
-        .UseNpgsql(config.GetConnectionString("PostgresConnectionString")));
+// builder.Services.AddDbContext<AppDbContext>(options =>
+//     options.EnableSensitiveDataLogging()
+//         .UseNpgsql(config.GetConnectionString("PostgresConnectionString")));
 
-// Add services to the container.
+builder.AddNpgsqlDbContext<AppDbContext>("techchallenge01");
+
 
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
@@ -64,6 +64,7 @@ var app = builder.Build();
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
+    await app.ConfigureDatabaseAsync();
     app.UseSwagger();
     app.UseSwaggerUI();
 }

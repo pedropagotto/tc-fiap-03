@@ -12,6 +12,12 @@
     <ItemGroup>
         <PackageReference Include="Aspire.Hosting" Version="8.2.2" />
         <PackageReference Include="Aspire.Hosting.AppHost" Version="8.2.2" />
+        <PackageReference Include="Aspire.Hosting.PostgreSQL" Version="8.2.2" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\AuthApi\AuthApi.csproj" />
+      <ProjectReference Include="..\ContactReadApi\ContactReadApi.csproj" />
     </ItemGroup>
 
 </Project>
