@@ -30,7 +30,7 @@ builder.Services.AddDbContext<AppDbContext>(options =>
     options.EnableSensitiveDataLogging()
         .UseNpgsql(config.GetConnectionString("PostgresConnectionString")));
 
-builder.AddServiceDefaults();
+// builder.AddServiceDefaults();
 
 // Add services to the container.
 
