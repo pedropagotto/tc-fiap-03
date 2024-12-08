@@ -21,6 +21,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AuthApi", "..\AuthApi\AuthA
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ContactWorker", "..\ContactWorker\ContactWorker.csproj", "{52BA585E-28AF-4CEB-A9CC-DD6D7AB25FCC}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ApplicationTest", "..\ApplicationTest\ApplicationTest.csproj", "{F92B48B2-AD65-47D1-80B6-7F3B1F185CA0}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -67,6 +69,10 @@ Global
 		{52BA585E-28AF-4CEB-A9CC-DD6D7AB25FCC}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{52BA585E-28AF-4CEB-A9CC-DD6D7AB25FCC}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{52BA585E-28AF-4CEB-A9CC-DD6D7AB25FCC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F92B48B2-AD65-47D1-80B6-7F3B1F185CA0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F92B48B2-AD65-47D1-80B6-7F3B1F185CA0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F92B48B2-AD65-47D1-80B6-7F3B1F185CA0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F92B48B2-AD65-47D1-80B6-7F3B1F185CA0}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
