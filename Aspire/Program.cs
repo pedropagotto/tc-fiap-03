@@ -14,13 +14,14 @@ var authProject = builder.AddProject<Projects.AuthApi>("auth")
 var readApi = builder.AddProject<Projects.ContactReadApi>("readApi")
     .WithReference(postgresdb);
 
-builder.AddContainer("prometheus", "prom/prometheus")
-    .WithBindMount("../prometheus/prometheus.yml", "/etc/prometheus/prometheus.yml", isReadOnly: true)
-    .WithHttpEndpoint(port: 9090, targetPort: 9090);
-
 builder.AddContainer("grafana", "grafana/grafana")
     .WithBindMount("../grafana/config", "/etc/grafana", isReadOnly: true)
-    .WithBindMount("../grafana/dashboards", "/var/lib/grafana/dashboards", isReadOnly: true)
+    .WithBindMount("../grafana", "/var/lib/grafana")
     .WithHttpEndpoint(targetPort: 3000, name: "http");
+
+builder.AddContainer("prometheus", "prom/prometheus")
+    .WithBindMount("../prometheus/prometheus.yml", "/etc/prometheus/prometheus.yml", isReadOnly: true)
+    .WithHttpEndpoint(port: 9090, targetPort: 9090)
+    .WithReference(readApi);
 
 builder.Build().Run();

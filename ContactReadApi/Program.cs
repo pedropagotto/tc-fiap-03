@@ -26,11 +26,11 @@ var configuration = config.GetSection("Values:TechChallenge").Get<TechChallengeF
 
 var builder = WebApplication.CreateBuilder(args);
 
-builder.Services.AddDbContext<AppDbContext>(options =>
-    options.EnableSensitiveDataLogging()
-        .UseNpgsql(config.GetConnectionString("PostgresConnectionString")));
+// builder.Services.AddDbContext<AppDbContext>(options =>
+//     options.EnableSensitiveDataLogging()
+//         .UseNpgsql(config.GetConnectionString("PostgresConnectionString")));
 
-builder.AddServiceDefaults();
+builder.AddNpgsqlDbContext<AppDbContext>("techchallenge01");
 
 // Add services to the container.
 
