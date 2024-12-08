@@ -2,7 +2,7 @@
 using API.Validation;
 using Application.Services;
 using Application.ViewModels.Contact;
-using ContactApi.QueueMessageModels;
+using Common.QueueMessageModels;
 using Domain.Shared;
 using MassTransit;
 using Microsoft.AspNetCore.Authorization;
@@ -12,7 +12,7 @@ namespace API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    [Authorize]
+    // [Authorize]
     public class ContactsController : ControllerBase
     {
         private readonly IBus _bus;

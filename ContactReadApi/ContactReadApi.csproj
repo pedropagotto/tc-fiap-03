@@ -36,7 +36,7 @@
 	<ItemGroup>
 		<ProjectReference Include="..\Application\Application.csproj" />
 		<ProjectReference Include="..\Common\Common.csproj" />
-		<ProjectReference Include="..\ServiceDefaults\ServiceDefaults.csproj" />
+<!--		<ProjectReference Include="..\ServiceDefaults\ServiceDefaults.csproj" />-->
 	</ItemGroup>
 
 </Project>
