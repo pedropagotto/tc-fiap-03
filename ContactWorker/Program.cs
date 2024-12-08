@@ -23,9 +23,7 @@ var configuration = config.GetSection("RabbitMQConnection").Get<ConsumerConfigur
 
 var builder = Host.CreateApplicationBuilder(args);
 
-builder.Services.AddDbContext<AppDbContext>(options =>
-    options.EnableSensitiveDataLogging()
-        .UseNpgsql(config.GetConnectionString("PostgresConnectionString")));
+builder.AddNpgsqlDbContext<AppDbContext>("techchallenge01");
 
 builder.Services.AddHostedService<Worker>();
 builder.Services.AddSingleton<IConfiguration>(config);

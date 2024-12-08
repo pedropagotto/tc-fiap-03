@@ -15,6 +15,9 @@ var readApi = builder.AddProject<Projects.ContactReadApi>("readApi")
     .WithReference(postgresdb);
 
 var contactsApi = builder.AddProject<Projects.ContactApi>("cotactsApi")
+    .WithReference(postgresdb);;
+
+var contactWorker = builder.AddProject<Projects.ContactWorker>("contactWorker")
     .WithReference(postgresdb);
 
 builder.AddContainer("grafana", "grafana/grafana")
