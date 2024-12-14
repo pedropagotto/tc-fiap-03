@@ -19,7 +19,7 @@ jobs:
     - name: Restore dependencies
       run: |
         cd ./Aspire
-        dotnet restore
+        dotnet restore TC-03.sln
     - name: Build
       run: dotnet build --no-restore
     - name: Test
