@@ -1,5 +1,4 @@
 using MassTransit;
-using Polly;
 
 namespace API.Config;
 
