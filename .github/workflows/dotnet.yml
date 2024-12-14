@@ -28,5 +28,6 @@ jobs:
         cd ./Aspire
         dotnet build TC-03.sln --configuration Release --no-restore
     - name: Test
-      run: | 
+      run: |
+        cd ./Aspire
         dotnet test TC-03.sln
