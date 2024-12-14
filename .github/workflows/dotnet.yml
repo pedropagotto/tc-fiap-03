@@ -25,6 +25,7 @@ jobs:
         dotnet restore TC-03.sln
     - name: Build
       run: |
-        dotnet build TC-03.sln --no-restore
+        cd ./Aspire
+        dotnet build TC-03.sln --configuration Release --no-restore
     - name: Test
       run: dotnet test --no-build --verbosity normal
