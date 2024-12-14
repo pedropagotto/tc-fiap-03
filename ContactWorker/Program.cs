@@ -60,6 +60,13 @@ builder.Services.AddMassTransit(x =>
         });
 
         cfg.ConfigureEndpoints(context);
+        
+        cfg.UseCircuitBreaker(cb =>
+        {
+            cb.ActiveThreshold = 5;
+            cb.TrackingPeriod = TimeSpan.FromSeconds(10);
+            cb.ResetInterval = TimeSpan.FromMinutes(1);
+        });
     });
 });
 

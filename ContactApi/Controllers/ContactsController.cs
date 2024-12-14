@@ -30,7 +30,7 @@ namespace API.Controllers
         [ProducesResponseType(typeof(ValidationErrorModel), StatusCodes.Status400BadRequest)]
         [ProducesResponseType(typeof(UnauthorizedErrorModel), StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(typeof(ErrorModel), StatusCodes.Status500InternalServerError)]
-        public async Task<ActionResult<ContactResponseModel>> CreateContact([FromBody] ContactRequestModel contact)
+        public async Task<ActionResult> CreateContact([FromBody] ContactRequestModel contact)
         {
             ContactValidator validator = new();
             validator.IsValid(contact);
@@ -51,7 +51,7 @@ namespace API.Controllers
         [ProducesResponseType(typeof(ValidationErrorModel), StatusCodes.Status400BadRequest)]
         [ProducesResponseType(typeof(UnauthorizedErrorModel), StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(typeof(ErrorModel), StatusCodes.Status500InternalServerError)]
-        public async Task<ActionResult<ContactResponseModel>> PutContact([FromRoute] int id, [FromBody] ContactRequestModel contact)
+        public async Task<ActionResult> PutContact([FromRoute] int id, [FromBody] ContactRequestModel contact)
         {
             ContactValidator validator = new();
             validator.IsValid(contact);
