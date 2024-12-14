@@ -5,7 +5,7 @@ VisualStudioVersion = 17.11.35208.52
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Application", "..\Application\Application.csproj", "{710372B4-BC31-4B95-BFA5-B0E0E3EE2574}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "aspire", "aspire.csproj", "{7616A420-8845-4FE1-BA61-18DDFF063F9C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Aspire", "Aspire.csproj", "{7616A420-8845-4FE1-BA61-18DDFF063F9C}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Common", "..\Common\Common.csproj", "{82353F45-0A00-4254-BA34-63A40F2B370C}"
 EndProject
