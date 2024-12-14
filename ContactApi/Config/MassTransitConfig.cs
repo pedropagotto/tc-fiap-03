@@ -1,4 +1,5 @@
 using MassTransit;
+using Polly;
 
 namespace API.Config;
 
@@ -23,6 +24,12 @@ public static class MassTransitConfig
                 });
                 
                 cfg.ConfigureEndpoints(ctx);
+                cfg.UseCircuitBreaker(cb =>
+                {
+                    cb.ActiveThreshold = 5;
+                    cb.TrackingPeriod = TimeSpan.FromSeconds(10);
+                    cb.ResetInterval = TimeSpan.FromMinutes(1);
+                });
             });
         });
         
