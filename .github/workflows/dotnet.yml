@@ -30,4 +30,4 @@ jobs:
     - name: Test
       run: | 
         cd ./Aspire
-        dotnet test --no-build --verbosity normal
+        dotnet test TC-03.sln --no-build --verbosity normal
