@@ -54,7 +54,7 @@ builder.Services.AddSingleton<ITechChallengeFiapConfiguration>(prop => configura
 builder.Services.AddDependencyInjectionConfig();
 
 builder.Services.AddHealthChecks()
-    .AddNpgSql(config.GetConnectionString("PostgresConnectionString")!)
+    .AddNpgSql(config.GetConnectionString("techchallenge01")!)
     .ForwardToPrometheus();
 
 builder.Services.AddSystemMetrics();
