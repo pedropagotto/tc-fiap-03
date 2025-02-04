@@ -25,6 +25,11 @@ var config = new ConfigurationBuilder()
 var configuration = config.GetSection("Values:TechChallenge").Get<TechChallengeFiapConfiguration>();
 
 var builder = WebApplication.CreateBuilder(args);
+
+
+// builder.Services.AddDbContext<AppDbContext>(options =>
+//     options.EnableSensitiveDataLogging()
+//         .UseNpgsql(config.GetConnectionString("techchallenge01")));
 builder.AddNpgsqlDbContext<AppDbContext>("techchallenge01");
 
 // Add services to the container.
@@ -51,7 +56,7 @@ builder.Services.AddSingleton<ITechChallengeFiapConfiguration>(prop => configura
 builder.Services.AddDependencyInjectionConfig();
 
 builder.Services.AddHealthChecks()
-    .AddNpgSql(config.GetConnectionString("PostgresConnectionString")!)
+    .AddNpgSql(config.GetConnectionString("techchallenge01")!)
     .ForwardToPrometheus();
 
 // builder.Services.AddSystemMetrics();

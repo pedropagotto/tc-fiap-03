@@ -1,21 +1,20 @@
-﻿FROM mcr.microsoft.com/dotnet/runtime:8.0 AS base
-USER $APP_UID
-WORKDIR /app
+﻿FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
 
-FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
-ARG BUILD_CONFIGURATION=Release
 WORKDIR /src
-COPY ["../ContactWorker/ContactWorker.csproj", "../ContactWorker/"]
-RUN dotnet restore "../ContactWorker/ContactWorker.csproj"
+
+COPY ContactWorker/ContactWorker.csproj ./ContactWorker/
+
+RUN dotnet restore ContactWorker/ContactWorker.csproj
 COPY . .
-WORKDIR "/src/../ContactWorker"
-RUN dotnet build "ContactWorker.csproj" -c $BUILD_CONFIGURATION -o /app/build
 
-FROM build AS publish
-ARG BUILD_CONFIGURATION=Release
-RUN dotnet publish "ContactWorker.csproj" -c $BUILD_CONFIGURATION -o /app/publish /p:UseAppHost=false
+WORKDIR /src/ContactWorker/
 
-FROM base AS final
+RUN dotnet build ContactWorker.csproj -c Release -o /app/out
+
+FROM mcr.microsoft.com/dotnet/aspnet:8.0 AS runtime
+
 WORKDIR /app
-COPY --from=publish /app/publish .
+
+COPY --from=build /app/out .
+
 ENTRYPOINT ["dotnet", "ContactWorker.dll"]
